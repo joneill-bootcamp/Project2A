@@ -1,0 +1,23 @@
+{
+  "development": {
+    "username": "root",
+    "password": "Tippy@321.",
+    "database": "covid",
+    "host": "127.0.0.1",
+    "port": 3306,
+    "dialect": "mysql"
+  },
+  "test": {
+    "username": "root",
+    "password": "",
+    "database": "covid",
+    "host": "127.0.0.1",
+    "port": 3306,
+    "dialect": "mysql"
+  },
+  "production": {
+    "use_env_variable": "JAWSDB_URL",
+    "port": 3306,
+    "logging": false
+  }
+}
