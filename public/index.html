@@ -47,14 +47,23 @@
               <br />
               <br />
               <div class="form-group">
-                <select data-placeholder="" id="time-choice" name="time-choice">
-                  <option value="Nothing Selected" selected
-                    >Choose a timeframe</option
-                  >
-                  <option value="day">Day</option>
-                  <option value="week">Week</option>
-                  <option value="month">Month</option>
-                </select>
+                <label>Please choose the data you would like</label>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="checkbox" id="confirmed" value="confirmed">
+                  <label class="form-check-label" for="confirmed"> Confirmed Cases</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="checkbox" id="deaths" value="deaths">
+                  <label class="form-check-label" for="deaths"> Deaths</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="checkbox" id="recovered" value="recovered">
+                  <label class="form-check-label" for="recovered"> Recovered</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="checkbox" id="fatality-rate" value="fatality-rate">
+                  <label class="form-check-label" for="fatality-rate"> Fatality Rate</label>
+                </div>
               </div>
               <br />
               <br />
