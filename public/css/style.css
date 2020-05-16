@@ -1,0 +1,37 @@
+body {
+  background-color: lightgrey;
+}
+
+.jumbotron {
+  background: url("../img/covid.png") no-repeat center center;
+  background-size: 100%;
+  background-repeat: no-repeat;
+  background-position: right;
+  background-color: #000000;
+  color: #ffffff;
+  margin-top: 3%;
+}
+
+#leftside {
+  background-color: #5c5c5c;
+  color: white;
+  text-align: center;
+  margin-bottom: 1em;
+  font-size: 1.3em;
+}
+
+#rightside {
+  background-color: #5c5c5c;
+  color: white;
+  text-align: center;
+  margin-bottom: 1em;
+  font-size: 1.3em;
+}
+
+.form-group,
+#save-button {
+  width: 90%;
+  display: inline-block;
+  float: none;
+  margin: 0 auto;
+}

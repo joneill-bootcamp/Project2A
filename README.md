@@ -1,2 +1,2 @@
-# Project2A
-Project 2A second version
+# Project2
+Project2

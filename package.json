@@ -1,0 +1,26 @@
+{
+  "name": "project2a",
+  "version": "1.0.0",
+  "description": "Project2A",
+  "main": "server.js",
+  "dependencies": {
+    "express": "^4.17.1",
+    "mysql2": "^2.1.0",
+    "sequelize": "^5.21.8"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/joneill-bootcamp/Project2A.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/joneill-bootcamp/Project2A/issues"
+  },
+  "homepage": "https://github.com/joneill-bootcamp/Project2A#readme"
+}
