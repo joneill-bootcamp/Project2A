@@ -1,5 +1,10 @@
+body {
+  background-color: lightgrey;
+}
+
 .jumbotron {
-  /*background-image: url("../img/SOMETHING.png");*/
+  background: url("../img/covid.png") no-repeat center center;
+  background-size: 100%;
   background-repeat: no-repeat;
   background-position: right;
   background-color: #000000;
@@ -7,20 +12,26 @@
   margin-top: 3%;
 }
 
-#newburger {
-  color: #5c5c5c;
-}
-
 #leftside {
   background-color: #5c5c5c;
   color: white;
   text-align: center;
-  /*font-size: 1.3em;*/
+  margin-bottom: 1em;
+  font-size: 1.3em;
 }
 
 #rightside {
-  background-color: #e49322;
+  background-color: #5c5c5c;
   color: white;
   text-align: center;
-  /*font-size: 1.3em;*/
+  margin-bottom: 1em;
+  font-size: 1.3em;
+}
+
+.form-group,
+#save-button {
+  width: 90%;
+  display: inline-block;
+  float: none;
+  margin: 0 auto;
 }

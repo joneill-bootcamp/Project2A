@@ -10,7 +10,6 @@
       href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
     />
     <script src="https://code.jquery.com/jquery.js"></script>
-
     <script
       src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
       integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
@@ -24,63 +23,85 @@
       href="https://fonts.googleapis.com/css?family=Coiny"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="/css/style.css" type="text/css" />
+    <link rel="stylesheet" href="./css/style.css" />
   </head>
 
   <body>
     <div class="container">
       <div class="jumbotron">
-        <h1>!!PROJECT 2!!</h1>
-        <p>Some Text here</p>
+        <h1>COVID-19</h1>
+        <p>visualise the invisible</p>
         <br />
-        <h2>Make a Selection</h2>
-        <panel>
-          <form class="create-form">
-            <div class="form-group">
-              <label for="choices">Choose your Graph</label>
-
-              <select data-placeholder="" id="choices" name="choices">
-                <option value="Nothing Selected" selected
-                  >Please Select a Choice</option
-                >
-                <option value="Opiton1">Option1</option>
-                <option value="Option2">Option2</option>
-                <option value="Option3r">Option3</option>
-                <option value="Option4">Option4</option>
-              </select>
-
-              <button
-                type="button"
-                class="addchoice btn btn-success"
-                id="addchoice"
-              >
-                <span class="fa fa-thumbs-up"></span>
-              </button>
-            </div>
-          </form>
-        </panel>
       </div>
       <div class="row">
-        <div class="col-sm-6">
+        <div class="col-sm-4">
           <div class="panel panel-default">
             <div class="panel-heading" id="leftside">
-              <strong>Graph 1...</strong>
+              <strong>Please make a selection:</strong>
             </div>
-            <div class="panel-body"></div>
+            <form class="create-form text-center">
+              <div class="form-group">
+                <label for="country-choice">Choose a country</label>
+                <textarea class="form-control" id="country" rows="1"></textarea>
+              </div>
+              <br />
+              <br />
+              <div class="form-group">
+                <select data-placeholder="" id="time-choice" name="time-choice">
+                  <option value="Nothing Selected" selected
+                    >Choose a timeframe</option
+                  >
+                  <option value="day">Day</option>
+                  <option value="week">Week</option>
+                  <option value="month">Month</option>
+                </select>
+              </div>
+              <br />
+              <br />
+              <div class="form-group">
+                <select
+                  data-placeholder=""
+                  id="graph-choice"
+                  name="graph-choice"
+                >
+                  <option value="Nothing Selected" selected
+                    >Choose a graph style</option
+                  >
+                  <option value="bar">Bar Chart</option>
+                  <option value="donut">Donut Chart</option>
+                  <option value="pie">Pie Chart</option>
+                </select>
+                <br />
+                <br />
+                <button type="button" class="btn btn-warning" id="graph-button">
+                  Create my graph <span class="fa fa-bar-chart"></span>
+                </button>
+                <br />
+                <br/>
+              </div>
+            </form>
           </div>
         </div>
-        <div class="col-sm-6">
+        <div class="col-sm-8">
           <div class="panel panel-default">
             <div class="panel-heading" id="rightside">
-              <strong>Graph 2...</strong>
+              <strong>Based on your selection:</strong>
             </div>
-            <div class="panel-body"></div>
-          </div>
+            <div class="panel-body text-center">
+              <div id="graph-output">Graph Output</div>
+            </div>
+            <br />
+            <br />
+            <div>
+              <button type="button" class="btn btn-success" id="save-button">
+                Save my Search <span class="fa fa-bookmark"></span>
+              </button>
+            </div>
+            <br />
+            <br />
         </div>
       </div>
-      <!--endrow -->
     </div>
-    <!-- Custom Script -->
     <script
       src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.0/moment.min.js"
       type="text/javascript"
