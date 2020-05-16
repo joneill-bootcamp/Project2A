@@ -12,15 +12,15 @@ $(document).ready(function () {
     });
   }
 
-  function queryGet(get) {
-    $.ajax({
-      method: "GET",
-      url: "/api/get",
-      data: get,
-    }).then(function () {
-      console.log(get);
-    });
-  }
+  // function queryGet(get) {
+  //   $.ajax({
+  //     method: "GET",
+  //     url: "/api/get",
+  //     data: get,
+  //   }).then(function () {
+  //     console.log(get);
+  //   });
+  // }
 
   function afunction() {}
 
