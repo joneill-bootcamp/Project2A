@@ -1,29 +1,25 @@
 $(document).ready(function () {
-  var users = [];
+  async function createMyGraph() {
+    let countryEl = $('#country')
+    let confiremedCasesEl = $('confirmed')
+    let deathsEl = $('deaths')
+    let recoveredEl = $('recovered')
+    let fatalityRateEl = $('fatality-rate')
+    let graphStyleEl = $('graph-choice')
+    let saveEl = $('save-button')
 
-  //Event Handlers
-  $(document).on("click", "button.something", afunction);
+    let userData = await $.ajax(method: "GET", url: "api/get", data:)
 
-  function main() {
-    $.get("/api/user", function (data) {
-      users = data;
+    graphStyleEl.on("click", function(){
+      console.log("inside the graph click function")
+    })
 
-      console.log(" User Data", users);
-    });
+    saveEl.on("click", function(){
+      console.log("inside the save click function ")
+    })
+
+
   }
 
-  // function queryGet(get) {
-  //   $.ajax({
-  //     method: "GET",
-  //     url: "/api/get",
-  //     data: get,
-  //   }).then(function () {
-  //     console.log(get);
-  //   });
-  // }
-
-  function afunction() {}
-
-  // Iniital Run logic
-  main();
+ 
 });
