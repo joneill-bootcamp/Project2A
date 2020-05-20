@@ -1,19 +1,33 @@
 $(document).ready(function () {
   var graphStyleEl = $("#graph-button");
   var saveEl = $("#save-button");
+
   async function createMyGraph() {
     let countryEl = $("#country");
-    let confiremedCasesEl = $("confirmed");
-    let deathsEl = $("deaths");
-    let recoveredEl = $("recovered");
-    let fatalityRateEl = $("fatality-rate");
-    //let userData = await $.ajax(method: "GET", url: "api/get", data: )
+    let confiremedCasesEl = $("#confirmed");
+    let deathsEl = $("#deaths");
+    let recoveredEl = $("#recovered");
+    let fatalityRateEl = $("#fatality-rate");
+
+
+    return $.ajax({
+      url: "/api/getdata",
+      method: "POST",
+      data: {
+        country: countryEl.val()
+      }
+    })
   }
+
   $(document).on("click", "#graph-button", function (event) {
     // event.preventDefault();
     // event.stopPropagation();
+
     console.log("inside the graph click function");
     // if function to choose graph based on user choice
+
+    createMyGraph("Australia").then(res => console.log(res))
+
     console.log($("#graph-choice").val());
     switch ($("#graph-choice").val()) {
       case "bar":

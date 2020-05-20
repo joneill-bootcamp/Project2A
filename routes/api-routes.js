@@ -4,8 +4,8 @@ const passport = require("../config/passport");
 const axios = require("axios");
 const moment = require("moment");
 
+
 // Routes
-// =============================================================
 module.exports = function (app) {
   // Using the passport.authenticate middleware with our local strategy.
   // If the user has valid login credentials, send them to the members page.
@@ -74,7 +74,10 @@ module.exports = function (app) {
       req.query.desired_attributes
     );
 
-    res.json(responseData).end();
+
+    res.json({
+      data: true // todo: replace with the data that we need for the ui
+    })
   });
 
   // Call Covid API taking user Input
@@ -122,3 +125,4 @@ module.exports = function (app) {
       });
   }
 };
+
