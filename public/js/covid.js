@@ -4,17 +4,14 @@ $(document).ready(function () {
 
   async function createMyGraph() {
     let countryEl = $("#country");
-    let confiremedCasesEl = $("#confirmed");
-    let deathsEl = $("#deaths");
-    let recoveredEl = $("#recovered");
-    let fatalityRateEl = $("#fatality-rate");
-
+    let choiceEl = $("#chouce");
 
     return $.ajax({
       url: "/api/getdata",
       method: "POST",
       data: {
-        country: countryEl.val()
+        country: countryEl.val(),
+        choice: choiceEl.val()
       }
     })
   }
