@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Covid-19 - visualise the invisible - signup</title>
+    <title>Covid-19 - visualise the invisible - login</title>
     <link
       rel="stylesheet"
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
@@ -21,25 +21,17 @@
       <p class="lead">visualise the invisible</p>
       <br />
     </div>
-    <nav class="navbar navbar-dark">
-      <ul class="navbar-nav ml-auto">
-        <li class="nav-item active">
-          <a class="nav-link" href="/login"
-            >Login <span class="sr-only">(current)</span></a
-          >
-        </li>
-      </ul>
-    </nav>
+    <nav class="navbar navbar-dark"></nav>
     <div class="row center" id="signup">
       <div class="col">
         <div class="card mb-3">
           <div class="card-header text-white bg-secondary text-center">
-            <h2>Sign Up Form</h2>
+            <h2>Log in</h2>
           </div>
-          <form class="text-center sign">
+          <form class="text-center login">
             <div class="form-group">
               <br />
-              <label for="InputUsername">Username</label>
+              <label for="Username">Username</label>
               <input
                 type="text"
                 class="form-control"
@@ -65,17 +57,17 @@
               role="alert"
             >
               <span
-                class="glyphicon glyphicon-warning-sign"
+                class="glyphicon glyphicon-exclamation-sign"
                 aria-hidden="true"
               ></span>
               <span class="sr-only">Error:</span> <span class="msg"></span>
             </div>
             <br />
             <br />
-            <button type="submit" class="btn btn-secondary">Sign Up</button>
+            <button type="submit" class="btn btn-secondary">Log in</button>
             <br />
             <br />
-            <p>Already signed up? Log in <a href="/login">here</a></p>
+            <p>Not signed up? Sign up <a href="/">here</a></p>
             <br />
           </form>
         </div>
@@ -93,6 +85,6 @@
       crossorigin="anonymous"
     ></script>
     <script src="js/covid.js" type="text/javascript"></script>
-    <script src="js/signup.js" type="text/javascript"></script>
+    <script src="js/login.js" type="text/javascript"></script>
   </body>
 </html>

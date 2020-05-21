@@ -3,6 +3,8 @@ body {
 }
 
 .jumbotron {
+  width: 80%;
+  margin: auto;
   background: url("../img/covid.png") no-repeat center center;
   background-size: 100%;
   background-repeat: no-repeat;
@@ -14,16 +16,10 @@ body {
 }
 
 .navbar {
-  margin-bottom: 30px;
-  background-color: #595959;
-  color: white;
-  text-align: center;
-  margin-bottom: 1em;
-  font-size: 1.3em;
-}
-
-.panel > .panel-heading {
-  background-color: #595959;
+  width: 80%;
+  height: 63px;
+  margin: auto;
+  background-color: #6c757d;
   color: white;
   text-align: center;
   margin-bottom: 1em;
@@ -40,4 +36,14 @@ body {
 
 #signup {
   margin: auto;
+  max-width: 400px;
+}
+.graph-page {
+  width: 80%;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.card {
+  margin-bottom: 20px;
 }
