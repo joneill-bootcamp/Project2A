@@ -35,7 +35,7 @@ $(document).ready(function () {
   }
 
   function handleLoginErr(err) {
-    $("#alert .msg").text(`${err.statusText} action, this user exists already`);
+    $("#alert .msg").text(err.responseText);
     $("#alert").fadeIn(500);
   }
 });
