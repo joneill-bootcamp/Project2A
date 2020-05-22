@@ -3,25 +3,22 @@ const db = require("../models");
 const passport = require("../config/passport");
 const buildObject = require("../utils/buildObject");
 
-
 // Return date string in mm/dd/y format
 function formatAUDate(d) {
   function z(n) {
-    return (n < 10 ? '0' : '') + +n;
+    return (n < 10 ? "0" : "") + +n;
   }
   //return z(d.getMonth() + 1) + '/' + z(d.getDate()) + '/' + d.getFullYear();
-  return d.getFullYear() + '-' + z(d.getMonth() + 1) + '-' + z(d.getDate());
+  return d.getFullYear() + "-" + z(d.getMonth() + 1) + "-" + z(d.getDate());
 }
 
 function last7Days(d) {
-  d = +(d || new Date()), days = [], i = 7;
+  (d = +(d || new Date())), (days = []), (i = 7);
   while (i--) {
-    days.push(formatAUDate(new Date(d -= 8.64e7)));
+    days.push(formatAUDate(new Date((d -= 8.64e7))));
   }
   return days;
 }
-
-
 
 // Routes
 module.exports = function (app) {
@@ -37,9 +34,9 @@ module.exports = function (app) {
   // otherwise send back an error
   app.post("/api/signup", async function (req, res) {
     db.User.create({
-        username: req.body.username,
-        password: req.body.password,
-      })
+      username: req.body.username,
+      password: req.body.password,
+    })
       .then(function () {
         res.redirect(307, "/api/login");
       })
@@ -72,24 +69,12 @@ module.exports = function (app) {
     }
   });
 
-  // GET route XXXXXXXX
-  app.get("/api/covid", function (req, res) {
-    let query = {};
-
-    db.User.findAll({
-      where: query,
-    }).then(function (dbGet) {
-      res.json(dbGet);
-    });
-  });
-
   // GET route data for a week
   app.post("/api/getdata", async function (req, res) {
-
-
-    const responseObject = await buildObject(req.body.country);
-
-    console.log(responseObject);
+    const responseObject = await buildObject(
+      req.body.country,
+      req.body.dataChoice
+    );
     res.json(responseObject);
   });
 };

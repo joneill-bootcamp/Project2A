@@ -2,62 +2,89 @@ const axios = require("axios");
 
 // Return date string in yyyy-mm-dd format
 function formatAUDate(d) {
-    function z(n) {
-        return (n < 10 ? '0' : '') + +n;
-    }
-    return d.getFullYear() + '-' + z(d.getMonth() + 1) + '-' + z(d.getDate());
+  function z(n) {
+    return (n < 10 ? "0" : "") + +n;
+  }
+  return d.getFullYear() + "-" + z(d.getMonth() + 1) + "-" + z(d.getDate());
 }
 
 function last7Days(d) {
-    d = +(d || new Date()), days = [], i = 7;
-    while (i--) {
-        days.push(formatAUDate(new Date(d -= 8.64e7)));
+  (d = +(d || new Date())), (days = []), (i = 7);
+  while (i--) {
+    days.push(formatAUDate(new Date((d -= 8.64e7))));
+  }
+  return days;
+}
+async function callAPI(query_region, queryDate, dataChoice) {
+  // Set up localvars
+  console.log("querying");
+  let totalCases = 0;
+  let totalDeaths = 0;
+  let totalRecovered = 0;
+  let dailyCases = 0;
+  let dailyDeaths = 0;
+  let dailyRecovered = 0;
+  let fatalityRate = [];
+  let queryResult;
+
+  let queryURL = `https://covid-api.com/api/reports?date=${queryDate}&q=${query_region}`;
+
+  let { data: response } = await axios.get(queryURL);
+
+  response.data.forEach((item) => {
+    totalCases += item.confirmed;
+    totalDeaths += item.deaths;
+    totalRecovered += item.recovered;
+    dailyCases += item.confirmed_diff;
+    dailyDeaths += item.deaths_diff;
+    dailyRecovered += item.recovered_diff;
+    fatalityRate.push(item.fatality_rate);
+  });
+  const fatalityRateAvg = (arr) => arr.reduce((a, b) => a + b, 0) / arr.length;
+  if (dataChoice === "confirmedTotal") {
+    queryResult = dailyCases;
+  } else if (dataChoice === "deathsTotal") {
+    queryResult = dailyDeaths;
+  } else if (dataChoice === "recoveredTotal") {
+    queryResult = dailyRecovered;
+  } else if (dataChoice === "confirmed") {
+    queryResult = dailyCases;
+  } else if (dataChoice === "deaths") {
+    queryResult = dailyDeaths;
+  } else if (dataChoice === "recovered") {
+    queryResult = dailyRecovered;
+  } else if (dataChoice === "fatality-rate") {
+    queryResult = fatalityRateAvg(fatalityRate);
+  } else {
+    console.log("data choice script error");
+  }
+  return {
+    datalabel: `${queryDate}`,
+    datavalue: queryResult,
+  };
+}
+
+module.exports = function buildObject(country, dataChoice) {
+  let responseObject = {
+    labels: [],
+    values: [],
+  };
+
+  let dateArray = last7Days();
+
+  return new Promise((res, rej) => {
+    async function getAllData() {
+      for (let i = 0; i < dateArray.length; i++) {
+        const { datalabel, datavalue } = await callAPI(
+          country,
+          dateArray[i],
+          dataChoice
+        );
+        responseObject.labels.unshift(datalabel);
+        responseObject.values.unshift(datavalue);
+      }
+      res(responseObject);
     }
-    return days;
-}
-async function callAPI(query_region, queryDate) {
-
-    // Set up localvars
-    let dailyDeaths = 0;
-
-    let queryURL = `https://covid-api.com/api/reports?date=${queryDate}&q=${query_region}`;
-
-    let {
-        data: response
-    } = await axios.get(queryURL)
-
-    response.data.forEach(item => {
-        dailyDeaths += item.deaths_diff;
-    });
-
-    return {
-        datalabel: `${queryDate}`,
-        datavalue: dailyDeaths
-    };
-}
-
-module.exports = function buildObject(country) {
-    let responseObject = {
-        labels: [],
-        values: []
-    }
-
-    let dateArray = last7Days();
-
-    return new Promise((res, rej) => {
-        async function getAllData() {
-            for (let i = 0; i < dateArray.length; i++) {
-                const {
-                    datalabel,
-                    datavalue
-                } = await callAPI(country, dateArray[i])
-                responseObject.labels.push(datalabel)
-                responseObject.values.push(datavalue)
-
-                console.log(responseObject);
-            }
-            res(responseObject);
-        }
-        getAllData()
-    })
-}
+    getAllData();
+  });
+};
