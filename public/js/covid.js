@@ -10,14 +10,14 @@ $(document).ready(function () {
   });
 
   $(document).on("click", "#save-button", async function (event) {
-    alert('Click!');
+    alert("Click!");
   });
 
   function graphBuilder(country, dataChoice, dataChoiceText) {
     $.post("/api/getdata", {
-        country: country,
-        dataChoice: dataChoice,
-      })
+      country: country,
+      dataChoice: dataChoice,
+    })
       .then(function success(data) {
         $("#spinner").hide();
         graphRender(data, country, dataChoiceText);
@@ -47,6 +47,7 @@ $(document).ready(function () {
           fillStyle: "cross-hatch",
           fillWeight: 1,
           labelFontSize: "20rem",
+          titleFontSize: "1.5rem",
         });
         break;
       case "barH":
@@ -54,7 +55,7 @@ $(document).ready(function () {
           element: "#graph",
           data: data,
           title: String(`${country} - ${dataChoiceText}`),
-          width: window.innerWidth / 1.8,
+          width: window.innerWidth / 1.9,
           roughness: 2,
           colors: ["red", "orange", "blue", "skyblue"],
           stroke: "black",
@@ -70,7 +71,6 @@ $(document).ready(function () {
           title: String(`${country} - ${dataChoiceText}`),
           width: window.innerWidth / 2,
           roughness: 2,
-          colors: ["red", "orange", "blue", "skyblue"],
           stroke: "black",
           strokeWidth: 3,
           fillStyle: "cross-hatch",
@@ -78,13 +78,12 @@ $(document).ready(function () {
         });
         break;
       case "pie":
-        new roughViz.Donut({
+        new roughViz.Pie({
           element: "#graph",
           data: data,
           title: String(`${country} - ${dataChoiceText}`),
           width: window.innerWidth / 2,
           roughness: 2,
-          colors: ["red", "orange", "blue", "skyblue"],
           stroke: "black",
           strokeWidth: 3,
           fillStyle: "cross-hatch",
