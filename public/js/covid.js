@@ -41,7 +41,7 @@ $(document).ready(function () {
           strokeWidth: 2,
           fillStyle: "cross-hatch",
           fillWeight: 1,
-          labelFontSize: "2rem",
+          labelFontSize: "20rem",
         });
         break;
       case "barH":
