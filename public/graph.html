@@ -44,7 +44,7 @@
               <strong>Please make your selection:</strong>
             </div>
             <br />
-            <form class="text-center">
+            <form class="text-center graph">
               <div class="form-group">
                 <label for="country-choice"
                   >Choose a country to report on</label
@@ -54,49 +54,18 @@
               <br />
               <br />
               <div class="form-group">
-                <label>Choose the data you would like to display</label>
-                <div class="form-check form-check-inline">
-                  <input
-                    class="form-check-input"
-                    type="checkbox"
-                    id="confirmed"
-                    value="confirmed"
-                  />
-                  <label class="form-check-label" for="confirmed">
-                    Confirmed Cases</label
+                <select data-placeholder="" id="data-choice" name="data-choice">
+                  <option value="Nothing-Selected" selected
+                    >Choose a data set</option
                   >
-                </div>
-                <div class="form-check form-check-inline">
-                  <input
-                    class="form-check-input"
-                    type="checkbox"
-                    id="deaths"
-                    value="deaths"
-                  />
-                  <label class="form-check-label" for="deaths"> Deaths</label>
-                </div>
-                <div class="form-check form-check-inline">
-                  <input
-                    class="form-check-input"
-                    type="checkbox"
-                    id="recovered"
-                    value="recovered"
-                  />
-                  <label class="form-check-label" for="recovered">
-                    Recovered</label
-                  >
-                </div>
-                <div class="form-check form-check-inline">
-                  <input
-                    class="form-check-input"
-                    type="checkbox"
-                    id="fatality-rate"
-                    value="fatality-rate"
-                  />
-                  <label class="form-check-label" for="fatality-rate">
-                    Fatality Rate</label
-                  >
-                </div>
+                  <option value="confirmedTotal">Total confirmed cases</option>
+                  <option value="confirmed">Daily confirmed cases</option>
+                  <option value="deathsTotal">Total Deaths</option>
+                  <option value="deaths">Daily Deaths</option>
+                  <option value="recoveredTotal">Total recovered cases</option>
+                  <option value="recovered">Daily recovered cases</option>
+                  <option value="fatality-rate">Fatality rate</option>
+                </select>
               </div>
               <br />
               <br />
@@ -134,8 +103,28 @@
               <br />
               <br />
               <div id="graph"></div>
+              <div
+                class="spinner-grow text-success busy"
+                style="display: none;"
+                id="spinner"
+                role="status"
+              >
+                <span class="sr-only">Loading...</span>
+              </div>
               <br />
               <br />
+              <div
+                style="display: none;"
+                id="alert"
+                class="alert alert-danger"
+                role="alert"
+              >
+                <span
+                  class="glyphicon glyphicon-warning-sign"
+                  aria-hidden="true"
+                ></span>
+                <span class="sr-only">Error:</span> <span class="msg"></span>
+              </div>
               <div>
                 <button
                   type="button"

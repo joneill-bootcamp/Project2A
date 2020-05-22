@@ -1,48 +1,39 @@
 $(document).ready(function () {
-  var graphStyleEl = $("#graph-button");
-  var saveEl = $("#save-button");
+  $("form.graph").on("click", "#graph-button", async function (event) {
+    event.preventDefault();
+    const country = $("#country").val();
+    const dataChoice = $("#data-choice").find(":selected").val();
+    const dataChoiceText = $("#data-choice").find(":selected").text();
+    $("#graph").empty();
+    $("#spinner").show();
+    await graphBuilder(country, dataChoice, dataChoiceText);
+  });
 
-  async function createMyGraph() {
-    let countryEl = $("#country");
-    let choiceEl = $("#chouce");
-
-    return $.ajax({
-      url: "/api/getdata",
-      method: "POST",
-      data: {
-        country: countryEl.val(),
-        choice: choiceEl.val()
-      }
+  function graphBuilder(country, dataChoice, dataChoiceText) {
+    $.post("/api/getdata", {
+      country: country,
+      dataChoice: dataChoice,
     })
+      .then(function success(data) {
+        $("#spinner").hide();
+        graphRender(data, country, dataChoiceText);
+      })
+      .catch(handleGraphErr);
+  }
+  function handleGraphErr(err) {
+    $("#alert .msg").text(
+      "sorry the graph was unable to load, please try again"
+    );
+    $("#alert").fadeIn(500);
   }
 
-  $(document).on("click", "#graph-button", function (event) {
-    // event.preventDefault();
-    // event.stopPropagation();
-
-    console.log("inside the graph click function");
-    // if function to choose graph based on user choice
-
-    createMyGraph("Australia").then(res => console.log(res))
-
-    console.log($("#graph-choice").val());
-    switch ($("#graph-choice").val()) {
+  function graphRender(data, country, dataChoiceText) {
+    switch ($("#graph-choice").find(":selected").val()) {
       case "bar":
         new roughViz.Bar({
           element: "#graph",
-          data: {
-            labels: [
-              "Monday",
-              "Tuesday",
-              "Wednesday",
-              "Thursday",
-              "Friday",
-              "Saturday",
-              "Sunday",
-            ],
-            values: [10, 20, 30, 15, 18, 29, 14],
-          },
-          title: "Bar Graph",
+          data: data,
+          title: String(`${country} - ${dataChoiceText}`),
           width: window.innerWidth / 1.9,
           roughness: 2,
           colors: ["red", "orange", "blue", "skyblue"],
@@ -56,19 +47,8 @@ $(document).ready(function () {
       case "barH":
         new roughViz.BarH({
           element: "#graph",
-          data: {
-            labels: [
-              "Monday",
-              "Tuesday",
-              "Wednesday",
-              "Thursday",
-              "Friday",
-              "Saturday",
-              "Sunday",
-            ],
-            values: [10, 20, 30, 15, 18, 29, 14],
-          },
-          title: "Regions",
+          data: data,
+          title: String(`${country} - ${dataChoiceText}`),
           width: window.innerWidth / 1.8,
           roughness: 2,
           colors: ["red", "orange", "blue", "skyblue"],
@@ -81,19 +61,8 @@ $(document).ready(function () {
       case "donut":
         new roughViz.Donut({
           element: "#graph",
-          data: {
-            labels: [
-              "Monday",
-              "Tuesday",
-              "Wednesday",
-              "Thursday",
-              "Friday",
-              "Saturday",
-              "Sunday",
-            ],
-            values: [10, 20, 30, 15, 18, 29, 14],
-          },
-          title: "Regions",
+          data: data,
+          title: String(`${country} - ${dataChoiceText}`),
           width: window.innerWidth / 2,
           roughness: 2,
           colors: ["red", "orange", "blue", "skyblue"],
@@ -103,14 +72,11 @@ $(document).ready(function () {
           fillWeight: 1,
         });
         break;
-      case "scatter":
-        new roughViz.Scatter({
+      case "pie":
+        new roughViz.Donut({
           element: "#graph",
-          data: {
-            labels: ["North", "South", "East", "West"],
-            values: [10, 5, 8, 3],
-          },
-          title: "Regions",
+          data: data,
+          title: String(`${country} - ${dataChoiceText}`),
           width: window.innerWidth / 2,
           roughness: 2,
           colors: ["red", "orange", "blue", "skyblue"],
@@ -121,8 +87,9 @@ $(document).ready(function () {
         });
         break;
     }
-  });
+  }
   $(document).on("click", "#save-button", function () {
+    // Need to create the save function of the graph search query of each user
     console.log("inside the save click function ");
   });
 });
