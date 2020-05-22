@@ -9,17 +9,22 @@ $(document).ready(function () {
     await graphBuilder(country, dataChoice, dataChoiceText);
   });
 
+  $(document).on("click", "#save-button", async function (event) {
+    alert('Click!');
+  });
+
   function graphBuilder(country, dataChoice, dataChoiceText) {
     $.post("/api/getdata", {
-      country: country,
-      dataChoice: dataChoice,
-    })
+        country: country,
+        dataChoice: dataChoice,
+      })
       .then(function success(data) {
         $("#spinner").hide();
         graphRender(data, country, dataChoiceText);
       })
       .catch(handleGraphErr);
   }
+
   function handleGraphErr(err) {
     $("#alert .msg").text(
       "sorry the graph was unable to load, please try again"
