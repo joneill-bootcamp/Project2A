@@ -4,8 +4,10 @@ $(document).ready(function () {
   $.get("/api/user_data").then(function (data) {
     $("#user-name").text(data.username);
     $("#user-name").attr("userid", data.id);
-    $("#country").val(data.country);
-    $("#data-choice").val(data.dataChoice);
-    $("#graph-choice").val(data.graphChoice);
+    if (data.country !== null) {
+      $("#country").val(data.country);
+      $("#data-choice").val(data.dataChoice);
+      $("#graph-choice").val(data.graphChoice);
+    }
   });
 });
