@@ -34,9 +34,9 @@ module.exports = function (app) {
   // otherwise send back an error
   app.post("/api/signup", async function (req, res) {
     db.User.create({
-        username: req.body.username,
-        password: req.body.password,
-      })
+      username: req.body.username,
+      password: req.body.password,
+    })
       .then(function () {
         res.redirect(307, "/api/login");
       })
@@ -65,6 +65,9 @@ module.exports = function (app) {
       res.json({
         username: req.user.username,
         id: req.user.id,
+        country: req.user.country,
+        dataChoice: req.user.dataChoice,
+        graphChoice: req.user.graphChoice,
       });
     }
   });
@@ -80,20 +83,24 @@ module.exports = function (app) {
 
   //PUT route for user
   app.put("/api/user/:userid", async function (req, res) {
-    db.User.update({
-      country: req.body.country,
-      dataChoice: req.body.dataChoice,
-      graphChoice: req.body.graphChoice
-    }, {
-      where: {
-        id: req.params.userid
+    db.User.update(
+      {
+        country: req.body.country,
+        dataChoice: req.body.dataChoice,
+        graphChoice: req.body.graphChoice,
+      },
+      {
+        where: {
+          id: req.params.userid,
+        },
       }
-    }).then(function (rowsUpdated) {
-      console.log(rowsUpdated);
-      res.json(rowsUpdated)
-
-    }).catch(function (error) {
-      console.log(error);
-    });
+    )
+      .then(function (rowsUpdated) {
+        console.log(rowsUpdated);
+        res.json(rowsUpdated);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   });
 };

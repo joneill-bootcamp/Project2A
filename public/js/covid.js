@@ -10,25 +10,24 @@ $(document).ready(function () {
   });
 
   $(document).on("click", "#save-button", function (event) {
-
     $.ajax({
       url: "/api/user/" + $("#user-name").attr("userid"),
       type: "PUT",
       data: {
         country: $("#country").val(),
-        dataChouce: $("#data-choice").find(":selected").val(),
+        dataChoice: $("#data-choice").find(":selected").val(),
         graphChoice: $("#graph-choice").find(":selected").val(),
-      }
-    }).then(result => {
+      },
+    }).then((result) => {
       alert("Your search has been saved!");
-    })
+    });
   });
 
   function graphBuilder(country, dataChoice, dataChoiceText) {
     $.post("/api/getdata", {
-        country: country,
-        dataChoice: dataChoice,
-      })
+      country: country,
+      dataChoice: dataChoice,
+    })
       .then(function success(data) {
         $("#spinner").hide();
         graphRender(data, country, dataChoiceText);
@@ -103,5 +102,4 @@ $(document).ready(function () {
         break;
     }
   }
-
 });
