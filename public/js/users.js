@@ -3,10 +3,9 @@ $(document).ready(function () {
   // and updates the HTML on the page
   $.get("/api/user_data").then(function (data) {
     $("#user-name").text(data.username);
-    $("#user-name").attr('userid', data.id);
-
-    $("#data-choice").val(data.datachoice);
-    $("#data-choice option[value=data.datachoice]").attr('selected', 'selected');
-    $("#graph-choice").val(data.graphchoice);
+    $("#user-name").attr("userid", data.id);
+    $("#country").val(data.country);
+    $("#data-choice").val(data.dataChoice);
+    $("#graph-choice").val(data.graphChoice);
   });
 });
