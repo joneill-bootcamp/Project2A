@@ -2,10 +2,10 @@ const axios = require("axios");
 
 // Return date string in yyyy-mm-dd format
 function formatAUDate(d) {
-  function z(n) {
-    return (n < 10 ? "0" : "") + +n;
-  }
-  return d.getFullYear() + "-" + z(d.getMonth() + 1) + "-" + z(d.getDate());
+    function z(n) {
+        return (n < 10 ? "0" : "") + +n;
+    }
+    return d.getFullYear() + "-" + z(d.getMonth() + 1) + "-" + z(d.getDate());
 }
 
 function last7Days(d) {
@@ -84,26 +84,29 @@ async function callAPI(query_region, queryDate, dataChoice) {
 }
 
 module.exports = function buildObject(country, dataChoice) {
-  let responseObject = {
-    labels: [],
-    values: [],
-  };
+    let responseObject = {
+        labels: [],
+        values: [],
+    };
 
-  let dateArray = last7Days();
+    let dateArray = last7Days();
 
-  return new Promise((res, rej) => {
-    async function getAllData() {
-      for (let i = 0; i < dateArray.length; i++) {
-        const { datalabel, datavalue } = await callAPI(
-          country,
-          dateArray[i],
-          dataChoice
-        );
-        responseObject.labels.unshift(datalabel);
-        responseObject.values.unshift(datavalue);
-      }
-      res(responseObject);
-    }
-    getAllData();
-  });
+    return new Promise((res, rej) => {
+        async function getAllData() {
+            for (let i = 1; i < dateArray.length; i++) {
+                const {
+                    datalabel,
+                    datavalue
+                } = await callAPI(
+                    country,
+                    dateArray[i],
+                    dataChoice
+                );
+                responseObject.labels.unshift(datalabel);
+                responseObject.values.unshift(datavalue);
+            }
+            res(responseObject);
+        }
+        getAllData();
+    });
 };

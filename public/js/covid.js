@@ -9,15 +9,26 @@ $(document).ready(function () {
     await graphBuilder(country, dataChoice, dataChoiceText);
   });
 
-  $(document).on("click", "#save-button", async function (event) {
-    alert("Click!");
+  $(document).on("click", "#save-button", function (event) {
+
+    $.ajax({
+      url: "/api/user/" + $("#user-name").attr("userid"),
+      type: "PUT",
+      data: {
+        country: $("#country").val(),
+        dataChouce: $("#data-choice").find(":selected").val(),
+        graphChoice: $("#graph-choice").find(":selected").val(),
+      }
+    }).then(result => {
+      alert("Your search has been saved!");
+    })
   });
 
   function graphBuilder(country, dataChoice, dataChoiceText) {
     $.post("/api/getdata", {
-      country: country,
-      dataChoice: dataChoice,
-    })
+        country: country,
+        dataChoice: dataChoice,
+      })
       .then(function success(data) {
         $("#spinner").hide();
         graphRender(data, country, dataChoiceText);
@@ -92,8 +103,5 @@ $(document).ready(function () {
         break;
     }
   }
-  $(document).on("click", "#save-button", function () {
-    // Need to create the save function of the graph search query of each user
-    console.log("inside the save click function ");
-  });
+
 });

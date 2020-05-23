@@ -89,7 +89,9 @@ module.exports = function (app) {
         id: req.params.userid
       }
     }).then(function (rowsUpdated) {
+      console.log(rowsUpdated);
       res.json(rowsUpdated)
+
     }).catch(function (error) {
       console.log(error);
     });
