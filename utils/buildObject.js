@@ -31,22 +31,32 @@ async function callAPI(query_region, queryDate, dataChoice) {
 
   let { data: response } = await axios.get(queryURL);
 
-  response.data.forEach((item) => {
-    totalCases += item.confirmed;
-    totalDeaths += item.deaths;
-    totalRecovered += item.recovered;
-    dailyCases += item.confirmed_diff;
-    dailyDeaths += item.deaths_diff;
-    dailyRecovered += item.recovered_diff;
-    fatalityRate.push(item.fatality_rate);
-  });
+  if (response.data[0].region.province === "") {
+    totalCases = response.data[0].confirmed;
+    totalDeaths += response.data[0].deaths;
+    totalRecovered = response.data[0].recovered;
+    dailyCases = response.data[0].confirmed_diff;
+    dailyDeaths = response.data[0].deaths_diff;
+    dailyRecovered = response.data[0].recovered_diff;
+    fatalityRate = response.data[0].fatality_rate;
+  } else {
+    response.data.forEach((item) => {
+      totalCases += item.confirmed;
+      totalDeaths += item.deaths;
+      totalRecovered += item.recovered;
+      dailyCases += item.confirmed_diff;
+      dailyDeaths += item.deaths_diff;
+      dailyRecovered += item.recovered_diff;
+      fatalityRate.push(item.fatality_rate);
+    });
+  }
   const fatalityRateAvg = (arr) => arr.reduce((a, b) => a + b, 0) / arr.length;
   if (dataChoice === "confirmedTotal") {
-    queryResult = dailyCases;
+    queryResult = totalCases;
   } else if (dataChoice === "deathsTotal") {
-    queryResult = dailyDeaths;
+    queryResult = totalDeaths;
   } else if (dataChoice === "recoveredTotal") {
-    queryResult = dailyRecovered;
+    queryResult = totalRecovered;
   } else if (dataChoice === "confirmed") {
     queryResult = dailyCases;
   } else if (dataChoice === "deaths") {
