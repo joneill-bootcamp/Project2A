@@ -3,6 +3,7 @@ body {
 }
 
 .jumbotron {
+  font-family: ;
   width: 80%;
   margin: auto;
   background: url("../img/covid.png") no-repeat center center;
