@@ -9,10 +9,11 @@ function formatAUDate(d) {
 }
 
 function last7Days(d) {
-  (d = +(d || new Date())), (days = []), (i = 7);
+  (d = +(d || new Date())), (days = []), (i = 8);
   while (i--) {
     days.push(formatAUDate(new Date((d -= 8.64e7))));
   }
+  days.shift();
   return days;
 }
 async function callAPI(query_region, queryDate, dataChoice) {
@@ -26,19 +27,20 @@ async function callAPI(query_region, queryDate, dataChoice) {
   let dailyRecovered = 0;
   let fatalityRate = [];
   let queryResult;
-
+  // structure the query string
   let queryURL = `https://covid-api.com/api/reports?date=${queryDate}&q=${query_region}`;
-
+  // request the data
   let { data: response } = await axios.get(queryURL);
-
-  if (response.data[0].region.province === "") {
-    totalCases = response.data[0].confirmed;
-    totalDeaths += response.data[0].deaths;
-    totalRecovered = response.data[0].recovered;
-    dailyCases = response.data[0].confirmed_diff;
-    dailyDeaths = response.data[0].deaths_diff;
-    dailyRecovered = response.data[0].recovered_diff;
-    fatalityRate = response.data[0].fatality_rate;
+  // find out if returned data has a country total as the first object and if not iterate the data to create totals
+  let data = response.data[0];
+  if (data.region.province === "") {
+    totalCases = data.confirmed;
+    totalDeaths = data.deaths;
+    totalRecovered = data.recovered;
+    dailyCases = data.confirmed_diff;
+    dailyDeaths = data.deaths_diff;
+    dailyRecovered = data.recovered_diff;
+    fatalityRate = data.fatality_rate;
   } else {
     response.data.forEach((item) => {
       totalCases += item.confirmed;
@@ -50,23 +52,30 @@ async function callAPI(query_region, queryDate, dataChoice) {
       fatalityRate.push(item.fatality_rate);
     });
   }
+  // assign the data  to the graph array based on data choice of user
   const fatalityRateAvg = (arr) => arr.reduce((a, b) => a + b, 0) / arr.length;
-  if (dataChoice === "confirmedTotal") {
-    queryResult = totalCases;
-  } else if (dataChoice === "deathsTotal") {
-    queryResult = totalDeaths;
-  } else if (dataChoice === "recoveredTotal") {
-    queryResult = totalRecovered;
-  } else if (dataChoice === "confirmed") {
-    queryResult = dailyCases;
-  } else if (dataChoice === "deaths") {
-    queryResult = dailyDeaths;
-  } else if (dataChoice === "recovered") {
-    queryResult = dailyRecovered;
-  } else if (dataChoice === "fatality-rate") {
-    queryResult = fatalityRateAvg(fatalityRate);
-  } else {
-    console.log("data choice script error");
+  switch (dataChoice) {
+    case "confirmedTotal":
+      queryResult = totalCases;
+      break;
+    case "deathsTotal":
+      queryResult = totalDeaths;
+      break;
+    case "recoveredTotal":
+      queryResult = totalRecovered;
+      break;
+    case "confirmed":
+      queryResult = dailyCases;
+      break;
+    case "deaths":
+      queryResult = dailyDeaths;
+      break;
+    case "recovered":
+      queryResult = dailyRecovered;
+      break;
+    case "fatality-rate":
+      queryResult = fatalityRateAvg(fatalityRate);
+      break;
   }
   return {
     datalabel: `${queryDate}`,
