@@ -1,159 +1,122 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Covid-19 - visualise the invisible</title>
-    <link
-      rel="stylesheet"
-      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
-      integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
-      crossorigin="anonymous"
-    />
-    <link
-      rel="stylesheet"
-      href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
-    />
-    <script src="https://unpkg.com/rough-viz@1.0.6"></script>
-    <link rel="stylesheet" href="./css/style.css" />
-  </head>
 
-  <body>
-    <div class="jumbotron">
-      <div class="container"></div>
-      <h1 class="display-4">COVID-19</h1>
-      <p class="lead">visualise the invisible</p>
-      <br />
-    </div>
-    <nav class="navbar navbar-dark">
-      <a class="navbar-brand ml-auto" href="#">
-        You are logged in as <span class="user-name"></span>
-      </a>
-      <ul class="navbar-nav">
-        <li class="nav-item">
-          <a class="nav-link" href="/logout" tabindex="-1">Logout</a>
-        </li>
-      </ul>
-    </nav>
-    <div class="container-fluid graph-page">
-      <div class="row">
-        <div class="col-md-4">
-          <div class="card">
-            <div class="card-header text-white bg-secondary text-center">
-              <strong>Please make your selection:</strong>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>Covid-19 - visualise the invisible</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+    integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+  <script src="https://unpkg.com/rough-viz@1.0.6"></script>
+  <link rel="stylesheet" href="./css/style.css" />
+</head>
+
+<body>
+  <div class="jumbotron">
+    <div class="container"></div>
+    <h1 class="display-4">COVID-19</h1>
+    <p class="lead">visualise the invisible</p>
+    <br />
+  </div>
+  <nav class="navbar navbar-dark">
+    <a class="navbar-brand ml-auto" href="#">
+      You are logged in as <span id="user-name" class="user-name"></span>
+    </a>
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" href="/logout" tabindex="-1">Logout</a>
+      </li>
+    </ul>
+  </nav>
+  <div class="container-fluid graph-page">
+    <div class="row">
+      <div class="col-md-4">
+        <div class="card">
+          <div class="card-header text-white bg-secondary text-center">
+            <strong>Please make your selection:</strong>
+          </div>
+          <br />
+          <form class="text-center graph">
+            <div class="form-group">
+              <label for="country-choice">Choose a country to report on</label>
+              <textarea class="form-control" id="country" rows="1"></textarea>
             </div>
             <br />
-            <form class="text-center graph">
-              <div class="form-group">
-                <label for="country-choice"
-                  >Choose a country to report on</label
-                >
-                <textarea class="form-control" id="country" rows="1"></textarea>
-              </div>
+            <br />
+            <div class="form-group">
+              <select data-placeholder="" id="data-choice" name="data-choice">
+                <option value="Nothing-Selected" selected>Choose a data set</option>
+                <option value="confirmedTotal">Total confirmed cases</option>
+                <option value="confirmed">Daily confirmed cases</option>
+                <option value="deathsTotal">Total Deaths</option>
+                <option value="deaths">Daily Deaths</option>
+                <option value="recoveredTotal">Total recovered cases</option>
+                <option value="recovered">Daily recovered cases</option>
+                <option value="fatality-rate">Fatality rate</option>
+              </select>
+            </div>
+            <br />
+            <br />
+            <div class="form-group">
+              <select data-placeholder="" id="graph-choice" name="graph-choice">
+                <option value="Nothing-Selected" selected>Choose a graph style</option>
+                <option value="bar">Bar Graph</option>
+                <option value="barH">Horizontal Bar Graph</option>
+                <option value="donut">Donut Chart</option>
+                <option value="pie">Pie Chart</option>
+              </select>
               <br />
               <br />
-              <div class="form-group">
-                <select data-placeholder="" id="data-choice" name="data-choice">
-                  <option value="Nothing-Selected" selected
-                    >Choose a data set</option
-                  >
-                  <option value="confirmedTotal">Total confirmed cases</option>
-                  <option value="confirmed">Daily confirmed cases</option>
-                  <option value="deathsTotal">Total Deaths</option>
-                  <option value="deaths">Daily Deaths</option>
-                  <option value="recoveredTotal">Total recovered cases</option>
-                  <option value="recovered">Daily recovered cases</option>
-                  <option value="fatality-rate">Fatality rate</option>
-                </select>
-              </div>
+              <button type="button" class="btn btn-warning" id="graph-button">
+                Create my graph <span class="fa fa-bar-chart"></span>
+              </button>
               <br />
               <br />
-              <div class="form-group">
-                <select
-                  data-placeholder=""
-                  id="graph-choice"
-                  name="graph-choice"
-                >
-                  <option value="Nothing-Selected" selected
-                    >Choose a graph style</option
-                  >
-                  <option value="bar">Bar Graph</option>
-                  <option value="barH">Horizontal Bar Graph</option>
-                  <option value="donut">Donut Chart</option>
-                  <option value="pie">Pie Chart</option>
-                </select>
-                <br />
-                <br />
-                <button type="button" class="btn btn-warning" id="graph-button">
-                  Create my graph <span class="fa fa-bar-chart"></span>
-                </button>
-                <br />
-                <br />
-              </div>
-            </form>
-          </div>
+            </div>
+          </form>
         </div>
-        <div class="col-md-8">
-          <div class="card">
-            <div class="card-header text-white bg-secondary text-center">
-              <strong>Based on your selection:</strong>
+      </div>
+      <div class="col-md-8">
+        <div class="card">
+          <div class="card-header text-white bg-secondary text-center">
+            <strong>Based on your selection:</strong>
+          </div>
+          <div class="card-body text-center">
+            <br />
+            <br />
+            <div id="graph"></div>
+            <div class="spinner-grow text-success busy" style="display: none;" id="spinner" role="status">
+              <span class="sr-only">Loading...</span>
             </div>
-            <div class="card-body text-center">
-              <br />
-              <br />
-              <div id="graph"></div>
-              <div
-                class="spinner-grow text-success busy"
-                style="display: none;"
-                id="spinner"
-                role="status"
-              >
-                <span class="sr-only">Loading...</span>
-              </div>
-              <br />
-              <br />
-              <div
-                style="display: none;"
-                id="alert"
-                class="alert alert-danger"
-                role="alert"
-              >
-                <span
-                  class="glyphicon glyphicon-warning-sign"
-                  aria-hidden="true"
-                ></span>
-                <span class="sr-only">Error:</span> <span class="msg"></span>
-              </div>
-              <div>
-                <button
-                  type="button"
-                  class="btn btn-success"
-                  id="save-button"
-                  value="save-button"
-                >
-                  Save my Search <span class="fa fa-bookmark"></span>
-                </button>
-              </div>
-              <br />
-              <br />
+            <br />
+            <br />
+            <div style="display: none;" id="alert" class="alert alert-danger" role="alert">
+              <span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span>
+              <span class="sr-only">Error:</span> <span class="msg"></span>
             </div>
+            <div>
+              <button type="button" class="btn btn-success" id="save-button" value="save-button">
+                Save my Search <span class="fa fa-bookmark"></span>
+              </button>
+            </div>
+            <br />
+            <br />
           </div>
         </div>
       </div>
     </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script
-      src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-      integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
-      integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
-      crossorigin="anonymous"
-    ></script>
-    <script src="js/covid.js" type="text/javascript"></script>
-    <script src="js/users.js" type="text/javascript"></script>
-  </body>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
+  </script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+    integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous">
+  </script>
+  <script src="js/covid.js" type="text/javascript"></script>
+  <script src="js/users.js" type="text/javascript"></script>
+</body>
+
 </html>
