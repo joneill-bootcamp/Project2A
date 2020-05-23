@@ -6,7 +6,15 @@ const isAuthenticated = require("../config/middleware/isAuthenticated");
 
 module.exports = function (app) {
   app.get("/", function (req, res) {
-    // If the user already has an account send them to the graphing page
+    // If the user already has an account send them to the graph page
+    if (req.user) {
+      res.redirect("/graph");
+    }
+    res.sendFile(path.join(__dirname, "../public/login.html"));
+  });
+
+  app.get("/signup", function (req, res) {
+    // If the user already has an account send them to the graph page
     if (req.user) {
       res.redirect("/graph");
     }
@@ -14,7 +22,7 @@ module.exports = function (app) {
   });
 
   app.get("/login", function (req, res) {
-    // If the user already has an account send them to the members page
+    // If the user already has an account send them to the graph page
     if (req.user) {
       res.redirect("/graph");
     }
